@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hello Hedera HCS chat!</title>
+    <link rel="stylesheet" href="/index.css"></link>
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/index.js"></script>
+  <body>
+    <div class="chat">
+      <div class="side-panel">
+        <h1 id="title">Hedera Chat Demo ⚡️</h1>
+        <ul>
+          <li><a class="panel-link" href="https://docs.hedera.com/"><img />Hedera JS Docs</a></li>
+          <li><a class="panel-link"href="https://github.com/hashgraph/"><img />GitHub</a></li>
+          <li><a class="panel-link" href="https://docs.hedera.com/"><img />Chat tutorial</a></li>
+        </ul>
+      </div>
+      <div class="main-panel">
+        <div class="content">
+          <div class="header">
+            <div class="chat-details">
+              <h3 id="topic-id"> </h3>
+              <h4 id="sequence-number"> </h4>
+            </div>
+          </div>
+          <ul id="messages">
+          </ul>
+          <form id="form" action="">
+            <input id="m" autocomplete="off" placeholder="Type a message here"/><button alt="send"> </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
