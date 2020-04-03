@@ -2,6 +2,8 @@
 
 An example web app which demonstrates how you can use decentralized pub-sub messaging on the Hedera Consensus Service.
 
+![UI](images/ui.jpg)]
+
 > Estimated set up is ~10 minutes. If it takes you longer or issues arise, please [reach out](https://github.com/hashgraph/hedera-hcs-chat-js/issues)!
 
 ### Built With
@@ -71,7 +73,7 @@ After running your server, it will prompt you to configure your chat, e.g.
 3. What's your private key?          <---  defaults to the .env schema
 4. Should we create a new HCS topic, or connect to an existing one?
 ```
-
+![Set up](images/initalize.jpg)
 If everything was configured properly, the chat should now open at a random port location.
 
 You can additionally run another instance of the chat application by creating a new terminal, and running the application again. This will find another unused, random port location, and deploy multiple instances to your local machine. With the environment configurability, you can test out multi-client chats.
