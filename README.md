@@ -2,7 +2,7 @@
 
 An example web app which demonstrates how you can use decentralized pub-sub messaging on the Hedera Consensus Service.
 
-![UI](images/ui.jpg)]
+![UI](images/ui.jpg)
 
 > Estimated set up is ~10 minutes. If it takes you longer or issues arise, please [reach out](https://github.com/hashgraph/hedera-hcs-chat-js/issues)!
 
@@ -38,7 +38,7 @@ If you don't have one yet, sign up at [portal.hedera.com](https://portal.hedera.
 You can clone this repository by running the following command:
 
 ```
-git clone https://github.com/Cooper-Kunz/hello-hedera-chat-js.git
+git clone https://github.com/hashgraph/hedera-hcs-chat-js.git
 ```
 
 Create a `.env` file in the root of the project.
