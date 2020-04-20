@@ -24,10 +24,16 @@ var initQuestions = [
     type: "list",
     name: "topic",
     message: "Should we create a new topic, or connect to an existing one?",
-    choices: ["Connect to an existing topic", "Create a new topic"],
+    choices: ["Create a new topic", "Connect to an existing topic"],
     filter: function(val) {
       return val.toLowerCase();
     }
+  },
+  {
+    type: "input",
+    name: "existingTopicId",
+    message: "What's the topic ID?\n[empty will default to the value at process.env.TOPIC_ID]\n",
+    when: (answers) => !answers.topic.includes("create")
   }
 ];
 

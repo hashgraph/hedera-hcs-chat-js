@@ -33,7 +33,6 @@ const sleep = require("./utils.js").sleep;
 const mirrorNodeAddress = new MirrorClient(
   "hcs.testnet.mirrornode.hedera.com:5600"
 );
-const defaultTopicId = ConsensusTopicId.fromString("0.0.156824");
 const specialChar = "ℏ";
 var operatorAccount = "";
 var HederaClient = Client.forTestnet();
@@ -46,7 +45,11 @@ async function init() {
     try {
       logStatus = answers.status;
       configureAccount(answers.account, answers.key);
-      await configureTopic(answers.topic);
+      if (answers.existingTopicId != undefined) {
+        configureExistingTopic(answers.existingTopicId);
+      } else {
+        await configureNewTopic();
+      }
       /* run & serve the express app */
       runChat();
     } catch (error) {
@@ -165,22 +168,23 @@ function configureAccount(account, key) {
   }
 }
 
-async function configureTopic(createArg) {
-  // If the value in our init() process asked for a new topic
-  // we should create one, otherwise, return the default value
-  if (createArg.includes("create")) {
-    log("init()", "creating new topic", logStatus);
-    topicId = await createNewTopic();
-    log(
-      "ConsensusTopicCreateTransaction()",
-      `waiting for new HCS Topic & mirror node (it may take a few seconds)`,
-      logStatus
-    );
-    await sleep(9000);
-    return;
+async function configureNewTopic() {
+  log("init()", "creating new topic", logStatus);
+  topicId = await createNewTopic();
+  log(
+    "ConsensusTopicCreateTransaction()",
+    `waiting for new HCS Topic & mirror node (it may take a few seconds)`,
+    logStatus
+  );
+  await sleep(9000);
+  return;
+}
+
+async function configureExistingTopic(existingTopicId) {
+  log("init()", "connecting to existing topic", logStatus);
+  if (existingTopicId === "") {
+    topicId = ConsensusTopicId.fromString(process.env.TOPIC_ID);
   } else {
-    log("init()", "using default topic", logStatus);
-    topicId = defaultTopicId;
-    return;
+    topicId = ConsensusTopicId.fromString(existingTopicId);
   }
 }
