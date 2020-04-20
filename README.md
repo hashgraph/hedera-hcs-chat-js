@@ -25,9 +25,6 @@ This demo assumes that you have an account on the Hedera Testnet. For example:
 
 ```
 ACCOUNT_ID=0.0.123456789
-
-PUBLIC_KEY=302a300506032b657003210013d392c9ebcf942a3c4ca165e6ee7721df293960001dfe0c347ea8542ef6c4a4
-
 PRIVATE_KEY=302e020100300506032b657004220420f4361ec73dc43e568f1620a7b7ecb7330790b8a1c7620f1ce353aa1de4f0eaa6
 ```
 
@@ -41,17 +38,16 @@ You can clone this repository by running the following command:
 git clone https://github.com/hashgraph/hedera-hcs-chat-js.git
 ```
 
-Create a `.env` file in the root of the project.
+Copy the `.env.sample` file and rename the copy to `.env`
 
-Then and add your Testnet account info to the .env file, like below:
+Then update the newly renamed `.env` file with your Hedera Testnet account info as indicated. For example:
 
 ```
 ACCOUNT_ID=0.0.123456789
-
-PUBLIC_KEY=302a300506032b657003210013d392c9ebcf942a3c4ca165e6ee7721df293960001dfe0c347ea8542ef6c4a4
-
 PRIVATE_KEY=302e020100300506032b657004220420f4361ec73dc43e568f1620a7b7ecb7330790b8a1c7620f1ce353aa1de4f0eaa6
+TOPIC_ID=0.0.28583
 ```
+The `TOPIC_ID` is used when connecting to an existing topic. If you don't have one, you can leave it as is.
 
 After downloading and setting up our environment, we'll install our packages via [npm](https://docs.npmjs.com/about-npm/).
 
