@@ -20,10 +20,10 @@ $(function() {
   // these are all sent over the Hedera consensus service!
   socket.on("chat message", function(msg) {
 
-    // Split this message by a specific, special character
+      // Split this message by a specific, special character
     var splitMsg = msg.split("ℏ");
 
-    // Grab the specifically formatted message string
+      // Grab the specifically formatted message string
     var operatorId = splitMsg[0]; 
     var clientId = splitMsg[1].slice(0,6) + "..";
     var msg = splitMsg[2];
