@@ -1,6 +1,6 @@
 {
   "name": "@hashgraph/chat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hashgraph/sdk": "^1.1.4",
+    "@hashgraph/sdk": "^2.0.30",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "inquirer": "^7.0.4",
