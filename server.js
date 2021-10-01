@@ -61,28 +61,28 @@ function runChat() {
     });
     subscribeToMirror();
     io.on("connection", function (client) {
-      const connectMessage = {
-        operatorAccount: operatorAccount,
-        client: client.id,
-        topicId: topicId.toString()
-      }
+        const connectMessage = {
+            operatorAccount: operatorAccount,
+            client: client.id,
+            topicId: topicId.toString()
+        }
         io.emit(
             "connect message",
             JSON.stringify(connectMessage)
         );
         client.on("chat message", function (msg) {
             const message = {
-              operatorAccount: operatorAccount,
-              client: client.id,
-              message: msg
+                operatorAccount: operatorAccount,
+                client: client.id,
+                message: msg
             }
             sendHCSMessage(JSON.stringify(message));
         });
         client.on("disconnect", function () {
-          const disconnect = {
-            operatorAccount: operatorAccount,
-            client: client.id
-          }
+            const disconnect = {
+                operatorAccount: operatorAccount,
+                client: client.id
+            }
             io.emit("disconnect message", JSON.stringify(disconnect));
         });
     });
@@ -114,23 +114,23 @@ function subscribeToMirror() {
             .setTopicId(topicId)
             .subscribe(hederaClient,
                 (error) => {
-                  log("Message subscriber raised an error", error, logStatus);
+                    log("Message subscriber raised an error", error, logStatus);
                 },
                 (message) => {
-                  log("Response from TopicMessageQuery()", message, logStatus);
+                    log("Response from TopicMessageQuery()", message, logStatus);
                     const mirrorMessage = new TextDecoder("utf-8").decode(message.contents);
                     const messageJson = JSON.parse(mirrorMessage);
-                  log("Parsed mirror message", logStatus);
+                    log("Parsed mirror message", logStatus);
                     const runningHash = UInt8ToString(message["runningHash"]);
                     const timestamp = secondsToDate(message["consensusTimestamp"]);
 
-                  const messageToUI= {
-                      operatorAccount: messageJson.operatorAccount,
-                      client: messageJson.client,
-                      message: messageJson.message,
-                      sequence: message.sequenceNumber.toString(10), // sequence number is a big integer
-                      runningHash: runningHash,
-                      timestamp: timestamp
+                    const messageToUI = {
+                        operatorAccount: messageJson.operatorAccount,
+                        client: messageJson.client,
+                        message: messageJson.message,
+                        sequence: message.sequenceNumber.toString(10), // sequence number is a big integer
+                        runningHash: runningHash,
+                        timestamp: timestamp
                     }
                     io.emit(
                         "chat message",
@@ -193,7 +193,7 @@ async function configureNewTopic() {
         logStatus
     );
     await sleep(9000);
-    return;
+
 }
 
 async function configureExistingTopic(existingTopicId) {
