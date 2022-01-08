@@ -1,19 +1,27 @@
 /* configure access to our .env */
 require("dotenv").config();
 
-/* include express.js & socket.io */
+/* include express.js */
 const express = require("express");
 const app = express();
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
-
-/* include other packages */
-const inquirer = require("inquirer");
-const open = require("open");
-const TextDecoder = require("text-encoding").TextDecoder;
+const port = 3000
 
 /* hedera.js */
 const {
+<<<<<<< HEAD
+	AccountId,
+	PrivateKey,
+	Client,
+	TokenCreateTransaction,
+	TokenType,
+	TokenSupplyType,
+	TokenMintTransaction,
+	TransferTransaction,
+	AccountBalanceQuery,
+	TokenAssociateTransaction,
+} = require("@hashgraph/sdk");
+
+=======
     AccountId,
     PrivateKey,
     Client,
@@ -191,100 +199,28 @@ function sendHCSMessage(msg) {
         process.exit(1);
     }
 }
+>>>>>>> b44a6f9808817b18993728dbd0a8aab5fd103206
 
-function subscribeToMirror() {
-    try {
-        new TopicMessageQuery()
-            .setTopicId(topicId)
-            .subscribe(hederaClient,
-                (error) => {
-                    log("Message subscriber raised an error", error, logStatus);
-                },
-                (message) => {
-                    log("Response from TopicMessageQuery()", message, logStatus);
-                    const mirrorMessage = new TextDecoder("utf-8").decode(message.contents);
-                    const messageJson = JSON.parse(mirrorMessage);
-                    log("Parsed mirror message", logStatus);
-                    const runningHash = UInt8ToString(message["runningHash"]);
-                    const timestamp = secondsToDate(message["consensusTimestamp"]);
+// Configure accounts and client, and generate needed keys
+const operatorId = AccountId.fromString(process.env.OPERATOR_ID);
+const operatorKey = PrivateKey.fromString(process.env.OPERATOR_PV_KEY);
+const treasuryId = AccountId.fromString(process.env.TREASURY_ID);
+const treasuryKey = PrivateKey.fromString(process.env.TREASURY_PV_KEY);
 
-                    const messageToUI = {
-                        operatorAccount: messageJson.operatorAccount,
-                        client: messageJson.client,
-                        message: messageJson.message,
-                        sequence: message.sequenceNumber.toString(10), // sequence number is a big integer
-                        runningHash: runningHash,
-                        timestamp: timestamp
-                    }
-                    io.emit(
-                        "chat message",
-                        JSON.stringify(messageToUI)
-                    );
-                }
-            );
-        log("MirrorConsensusTopicQuery()", topicId.toString(), logStatus);
-    } catch (error) {
-        log("ERROR: MirrorConsensusTopicQuery()", error, logStatus);
-        process.exit(1);
-    }
-}
+const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
-async function createNewTopic() {
-    try {
-        const response = await new TopicCreateTransaction().execute(hederaClient);
-        log("TopicCreateTransaction()", `submitted tx`, logStatus);
-        const receipt = await response.getReceipt(hederaClient);
-        const newTopicId = receipt.topicId;
-        log(
-            "TopicCreateTransaction()",
-            `success! new topic ${newTopicId}`,
-            logStatus
-        );
-        return newTopicId;
-    } catch (error) {
-        log("ERROR: TopicCreateTransaction()", error, logStatus);
-        process.exit(1);
-    }
-}
 
-/* helper init functions */
-function configureAccount(account, key) {
-    try {
-        // If either values in our init() process were empty
-        // we should try and fallback to the .env configuration
-        if (account === "" || key === "") {
-            log("init()", "using default .env config", logStatus);
-            operatorAccount = process.env.ACCOUNT_ID;
-            hederaClient.setOperator(process.env.ACCOUNT_ID, process.env.PRIVATE_KEY);
-        }
-        // Otherwise, let's use the initalization parameters
-        else {
-            operatorAccount = account;
-            hederaClient.setOperator(account, key);
-        }
-    } catch (error) {
-        log("ERROR: configureAccount()", error, logStatus);
-        process.exit(1);
-    }
-}
+app.post('/create-nft', (req, res) => {
+    const supplyKey = PrivateKey.generate();
+    res.send('create nft')
+})
 
-async function configureNewTopic() {
-    log("init()", "creating new topic", logStatus);
-    topicId = await createNewTopic();
-    log(
-        "ConsensusTopicCreateTransaction()",
-        `waiting for new HCS Topic & mirror node (it may take a few seconds)`,
-        logStatus
-    );
-    await sleep(9000);
+app.post('/transfer-nft', (req, res) => {
+    res.send('Hello World!')
+})
 
-}
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
 
-async function configureExistingTopic(existingTopicId) {
-    log("init()", "connecting to existing topic", logStatus);
-    if (existingTopicId === "") {
-        topicId = TopicId.fromString(process.env.TOPIC_ID);
-    } else {
-        topicId = TopicId.fromString(existingTopicId);
-    }
-}
+module.exports = router;
