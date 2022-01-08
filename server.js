@@ -8,20 +8,6 @@ const port = 3000
 
 /* hedera.js */
 const {
-<<<<<<< HEAD
-	AccountId,
-	PrivateKey,
-	Client,
-	TokenCreateTransaction,
-	TokenType,
-	TokenSupplyType,
-	TokenMintTransaction,
-	TransferTransaction,
-	AccountBalanceQuery,
-	TokenAssociateTransaction,
-} = require("@hashgraph/sdk");
-
-=======
     AccountId,
     PrivateKey,
     Client,
@@ -31,11 +17,7 @@ const {
     TokenMintTransaction,
     TransferTransaction,
     AccountBalanceQuery,
-    TokenAssociateTransaction,
-    TopicId,
-    TopicMessageSubmitTransaction,
-    TopicCreateTransaction,
-    TopicMessageQuery
+    TokenAssociateTransaction
 } = require("@hashgraph/sdk");
 
 /* utilities */
@@ -56,61 +38,6 @@ let topicId = "";
 let logStatus = "Default";
 
 /* configure our env based on prompted input */
-async function init() {
-    inquirer.prompt(questions).then(async function (answers) {
-        try {
-            logStatus = answers.status;
-            configureAccount(answers.account, answers.key);
-            if (answers.existingTopicId != undefined) {
-                configureExistingTopic(answers.existingTopicId);
-            } else {
-                await configureNewTopic();
-            }
-            /* run & serve the express app */
-            runChat();
-        } catch (error) {
-            log("ERROR: init() failed", error, logStatus);
-            process.exit(1);
-        }
-    });
-}
-
-function runChat() {
-    app.use(express.static("public"));
-    http.listen(0, function () {
-        const randomInstancePort = http.address().port;
-        open("http://localhost:" + randomInstancePort);
-    });
-    subscribeToMirror();
-    io.on("connection", function (client) {
-        const connectMessage = {
-            operatorAccount: operatorAccount,
-            client: client.id,
-            topicId: topicId.toString()
-        }
-        io.emit(
-            "connect message",
-            JSON.stringify(connectMessage)
-        );
-        client.on("chat message", function (msg) {
-            const message = {
-                operatorAccount: operatorAccount,
-                client: client.id,
-                message: msg
-            }
-            sendHCSMessage(JSON.stringify(message));
-        });
-        client.on("disconnect", function () {
-            const disconnect = {
-                operatorAccount: operatorAccount,
-                client: client.id
-            }
-            io.emit("disconnect message", JSON.stringify(disconnect));
-        });
-    });
-}
-
-init(); // process arguments & handoff to runChat()
 
 /* helper hedera functions */
 
@@ -184,22 +111,6 @@ function getAccountBalance(accountId, tokenId) {
 	console.log(`- Treasury balance: ${balanceCheckTx.tokens._map.get(tokenId.toString())} NFTs of ID ${tokenId}`);
 }
 
-/* have feedback, questions, etc.? please feel free to file an issue! */
-function sendHCSMessage(msg) {
-    try {
-        // let's fire and forget here, we're not waiting for a receipt, just sending
-        new TopicMessageSubmitTransaction()
-            .setTopicId(topicId)
-            .setMessage(msg)
-            .execute(hederaClient);
-
-        log("TopicMessageSubmitTransaction()", msg, logStatus);
-    } catch (error) {
-        log("ERROR: TopicMessageSubmitTransaction()", error, logStatus);
-        process.exit(1);
-    }
-}
->>>>>>> b44a6f9808817b18993728dbd0a8aab5fd103206
 
 // Configure accounts and client, and generate needed keys
 const operatorId = AccountId.fromString(process.env.OPERATOR_ID);
