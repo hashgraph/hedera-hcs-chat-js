@@ -39,6 +39,8 @@ const sleep = require("./utils.js").sleep;
 
 /* creating the NFTs */
 const supplyKey = PrivateKey.generate();
+const treasuryId = AccountId.fromString(process.env.TREASURY_ID); // maybe get treasury key from organizer??
+const treasuryKey = PrivateKey.fromString(process.env.TREASURY_PR_KEY);
 
 let operatorAccount = "";
 const hederaClient = Client.forTestnet();
@@ -113,11 +115,22 @@ function createBadge(name,symbol,max) {
     .setTokenType(TokenType.NonFungibleUnique)
     .setDecimals(0)
     .setInitialSupply(0)
-    .setTreasuryAccountId(operatorAccount) // need a separate Treasury Account
+    .setTreasuryAccountId(treasuryId) //maybe get treasury key from organizer?
     .setMaxSupply(max)
     .setSupplyKey(supplyKey) //check what the supply key should be
     .freezeWith(hederaClient);
+
+    //Sign the transaction with the treasury key and submit to network
+    let badgeCreateTxSign = await badgeCreate.sign(treasuryKey);
+    let badgeCreateSubmit = await badgeCreateTxSign.execute(hederaClient);
+
+     //Get the transaction receipt information
+    let badgeCreateRx = await badgeCreateSubmit.getReceipt(hederaClient);
+    let tokenId = badgeCreateRx.tokenId;
+    console.log(`- Created NFT with Token ID: ${tokenId} \n`);
 }
+
+//Minting badges
 
 /* have feedback, questions, etc.? please feel free to file an issue! */
 function sendHCSMessage(msg) {
