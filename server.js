@@ -37,6 +37,9 @@ const secondsToDate = require("./utils.js").secondsToDate;
 const log = require("./utils.js").handleLog;
 const sleep = require("./utils.js").sleep;
 
+/* creating the NFTs */
+const supplyKey = PrivateKey.generate();
+
 let operatorAccount = "";
 const hederaClient = Client.forTestnet();
 let topicId = "";
@@ -101,8 +104,19 @@ init(); // process arguments & handoff to runChat()
 
 /* helper hedera functions */
 
-function createBadge() {
-
+// Creating badge based on info supplied by the event organizer
+function createBadge(name,symbol,max) {
+    //Creating the NFT
+    let badgeCreate = await new TokenCreateTransaction()
+    .setTokenName(name)
+    .setTokenSymbol(symbol)
+    .setTokenType(TokenType.NonFungibleUnique)
+    .setDecimals(0)
+    .setInitialSupply(0)
+    .setTreasuryAccountId(operatorAccount) // need a separate Treasury Account
+    .setMaxSupply(max)
+    .setSupplyKey(supplyKey) //check what the supply key should be
+    .freezeWith(hederaClient);
 }
 
 /* have feedback, questions, etc.? please feel free to file an issue! */
