@@ -14,7 +14,16 @@ const TextDecoder = require("text-encoding").TextDecoder;
 
 /* hedera.js */
 const {
+    AccountId,
+    PrivateKey,
     Client,
+    TokenCreateTransaction,
+    TokenType,
+    TokenSupplyType,
+    TokenMintTransaction,
+    TransferTransaction,
+    AccountBalanceQuery,
+    TokenAssociateTransaction,
     TopicId,
     TopicMessageSubmitTransaction,
     TopicCreateTransaction,
@@ -91,6 +100,10 @@ function runChat() {
 init(); // process arguments & handoff to runChat()
 
 /* helper hedera functions */
+
+function createBadge() {
+
+}
 
 /* have feedback, questions, etc.? please feel free to file an issue! */
 function sendHCSMessage(msg) {
