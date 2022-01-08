@@ -170,6 +170,12 @@ function assignBadge(txAccountId,txAccountKey,tokenId) {
     console.log(`\n- NFT transfer from Treasury to txAccount: ${tokenTransferRx.status} \n`);
 }
 
+//Get account balance
+function getAccountBalance(accountId, tokenId) {
+    var balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(hederaClient);
+	console.log(`- Treasury balance: ${balanceCheckTx.tokens._map.get(tokenId.toString())} NFTs of ID ${tokenId}`);
+}
+
 /* have feedback, questions, etc.? please feel free to file an issue! */
 function sendHCSMessage(msg) {
     try {
