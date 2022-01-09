@@ -16,7 +16,12 @@
     "inquirer": "^7.0.4",
     "open": "^7.0.0",
     "socket.io": "^2.3.0",
-    "text-encoding": "^0.7.0"
+    "text-encoding": "^0.7.0",
+    "child-process": "latest",
+    "pg": "latest",
+    "pg-connection-string": "latest",
+    "prompt": "latest",
+    "uuid": "latest"
   },
   "repository": {
     "type": "git",
