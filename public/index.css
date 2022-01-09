@@ -131,12 +131,18 @@ body {
   text-align: center;
   padding: 10px 15px;
   background: #FFA69E;
-  margin: 10px 0px 0px 0px;
+  margin: 10px 15px 0px 0px;
+}
+
+.upload-image {
+  margin-bottom: 10px;
 }
 
 #go-to-link {
   font-size: 14px;
   color:#8a8a8a;
+  padding: 0px;
+  margin: 0px;
 }
 
 #go-to-link:hover {
