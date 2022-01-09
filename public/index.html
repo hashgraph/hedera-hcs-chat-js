@@ -1,37 +1,44 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Hello Hedera HCS chat!</title>
-    <link rel="stylesheet" href="/index.css"></link>
-  </head>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="/index.js"></script>
-  <body>
-    <div class="chat">
-      <div class="side-panel">
-        <h1 id="title">Hedera Chat Demo ⚡️</h1>
-        <ul>
-          <li><a class="panel-link" href="https://docs.hedera.com/"><img />Hedera JS Docs</a></li>
-          <li><a class="panel-link"href="https://github.com/hashgraph/"><img />GitHub</a></li>
-          <li><a class="panel-link" href="https://docs.hedera.com/"><img />Chat tutorial</a></li>
-        </ul>
-      </div>
-      <div class="main-panel">
-        <div class="content">
-          <div class="header">
-            <div class="chat-details">
-              <h3 id="topic-id"> </h3>
-              <h4 id="sequence-number"> </h4>
-            </div>
-          </div>
-          <ul id="messages">
-          </ul>
-          <form id="form" action="">
-            <input id="m" autocomplete="off" placeholder="Type a message here"/><button alt="send"> </button>
-          </form>
-        </div>
-      </div>
+
+<head>
+  <link rel="stylesheet" href="index.css">
+  <link href='https://fonts.googleapis.com/css?family=Sen' rel='stylesheet'>
+</head>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="/index.js"></script>
+
+<body>
+  <div class="header">
+    <div class="left">
+      <img src=assets/Badger_Desktop.png width="150" height="59">
     </div>
-  </body>
+    <div class="right">
+      <a href="home.html">Home</a>
+      <a href="tech.html">Technology</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <button class="button-header" onclick="location.href='login.html'">LOGIN</button>
+      <button class="button-header" onclick="location.href='signup.html'">SIGN UP</button>
+    </div>
+  </div>
+
+  <div class="badges">
+    <img src=assets/Badger_Logo.png width="200" height="200">
+    <img src=assets/Badger_Logo.png width="200" height="200">
+    <img src=assets/Badger_Logo.png width="200" height="200">
+    <img src=assets/Badger_Logo.png width="200" height="200">
+    <img src=assets/Badger_Logo.png width="200" height="200">
+  </div>
+  <div class="badges-text">
+    Join events. Collect and trade NFT badges. <p>
+      <button class="button-gs" onclick="location.href='create-event.html'">GET STARTED</button>
+    </p>
+  </div>
+  <div></div>
+  <div class="info-header">
+    How does it work?
+  </div>
+</body>
+
 </html>
