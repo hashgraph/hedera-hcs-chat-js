@@ -123,3 +123,10 @@ function getAccountBalance(accountId, tokenId) {
     var balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(client);
 	console.log(`- Treasury balance: ${balanceCheckTx.tokens._map.get(tokenId.toString())} NFTs of ID ${tokenId}`);
 }
+
+async function main() {
+    createBadge("Floofy", "FLF", 50);
+    mintBadge(CID, tokenId);
+}
+
+main();
