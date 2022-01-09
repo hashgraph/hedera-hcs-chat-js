@@ -10,30 +10,43 @@
 
 <body>
     <div class="header">
-        <div class="left">
-          <a style ="padding:0" href="index.html"><img src=assets/Badger_Desktop.png width="150" height="59"></a>
-        </div>
-        <div class="right">
-          <a href="home.html">Home</a>
-          <a href="tech.html">Technology</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-          <button class="button-header" onclick="location.href='account.html'">MY ACCOUNT</button>
-        </div>
+      <div class="left">
+        <a style ="padding:0" href="index.html"><img src=assets/Badger_Desktop.png width="150" height="59"></a>
       </div>
-    
-      <div class="badges">
-        <img src=assets/Badger_Logo.png width="200" height="200">
-        <img src=assets/Badger_Logo.png width="200" height="200">
-        <img src=assets/Badger_Logo.png width="200" height="200">
-        <img src=assets/Badger_Logo.png width="200" height="200">
-        <img src=assets/Badger_Logo.png width="200" height="200">
+      <div class="right">
+        <a href="home.html">Home</a>
+        <a href="tech.html">Technology</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <button class="button-header" onclick="location.href='account.html'">MY ACCOUNT</button>
       </div>
-      <div class="badges-text">
-        Join events. Collect and trade NFT badges. <p>
-          <button class="button-gs" onclick="location.href='create-event.html'">GET STARTED</button>
-        </p>
+    </div>
+  
+    <div class="badges">
+      <img src=assets/Badger_Logo.png width="200" height="200">
+      <img src=assets/Badger_Logo.png width="200" height="200">
+      <img src=assets/Badger_Logo.png width="200" height="200">
+      <img src=assets/Badger_Logo.png width="200" height="200">
+      <img src=assets/Badger_Logo.png width="200" height="200">
+    </div>
+    <div class="badges-text">
+      Join events. Collect and trade NFT badges. <p>
+        <button class="button-gs" onclick="location.href='create-event.html'">GET STARTED</button>
+      </p>
+    </div>
+
+    <div class="creation-forms">
+      <div class="event-creation">
+        <form class="create-event">
+          <div class="form-title">Event Creation</div><br>
+          <label class="form-label" for="fname">Event Name</label><br>
+          <input class="form-input" type="text" id="name"><br>
+          <label class="form-label" for="lname">Description</label><br>
+          <textarea class="form-input" rows="5" id="desc"></textarea><br><br>
+          <input class="submit-btn" type="submit" value="Submit">
+        </form>
       </div>
+    </div>
 </body>
 
 </html>

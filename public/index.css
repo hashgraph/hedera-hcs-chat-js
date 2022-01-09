@@ -12,8 +12,6 @@ a{
   font-size: 20px;
 }
 
-
-
 body {
   background-color: #ddfff7;
   font-family: Sen;
@@ -64,6 +62,7 @@ body {
 }
 
 .badges {
+  text-align: center;
   padding: 50px;
 }
 
@@ -82,4 +81,43 @@ body {
   margin-left: 30px;
   font-family: Sen;
   font-size: 35px;
+}
+
+.creation-forms {
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.form-title {
+  font-size: 30px;
+  font-weight: 600;
+  padding-bottom: 2%;
+}
+
+.form-label {
+  font-size: 20px;
+}
+
+.form-input {
+  padding-bottom: 2%;
+  width: 100%;
+  border-style:solid;
+  border-color: #bdbdbd;
+  border-radius: 5px;
+  border-width:1px
+}
+
+.create-event {
+  text-align: left;
+  width: 100%;
+  padding: 5%;
+  background-color: #e7ddd2;
+  border-radius: 10px;
+}
+
+.submit-btn {
+  text-align: center;
+  padding: 5%
 }
