@@ -98,15 +98,25 @@ body {
 
 .form-label {
   font-size: 20px;
+  margin: 0px 15px 0px 0px;
+}
+
+.form-text-field {
+  margin-bottom: 15px;
 }
 
 .form-input {
-  padding-bottom: 2%;
+  /* padding-bottom: 2%; */
   width: 100%;
   border-style:solid;
   border-color: #bdbdbd;
   border-radius: 5px;
   border-width:1px
+}
+
+.form-date-time {
+  font-family: Sen;
+  margin-bottom: 10px;
 }
 
 .create-event {
@@ -119,5 +129,7 @@ body {
 
 .submit-btn {
   text-align: center;
-  padding: 5%
+  padding: 10px 15px;
+  background: #FFA69E;
+  margin: 10px 0px 0px 0px;
 }
