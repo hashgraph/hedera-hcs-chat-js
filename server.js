@@ -3,14 +3,21 @@ require("dotenv").config();
 
 /* include express.js */
 const express = require("express");
+const bodyParser = require("body-parser");
+const router = express.Router();
 const app = express();
 const port = 3000
+
+// configure express to user body-parser as middleware
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
 
 /* hedera.js */
 const {
     AccountId,
     PrivateKey,
     Client,
+    TokenId,
     TokenCreateTransaction,
     TokenType,
     TokenSupplyType,
@@ -20,42 +27,61 @@ const {
     TokenAssociateTransaction
 } = require("@hashgraph/sdk");
 
-/* utilities */
-const questions = require("./utils.js").initQuestions;
-const UInt8ToString = require("./utils.js").UInt8ToString;
-const secondsToDate = require("./utils.js").secondsToDate;
-const log = require("./utils.js").handleLog;
-const sleep = require("./utils.js").sleep;
-
-/* creating the NFTs */
-const supplyKey = PrivateKey.generate();
-
 // Configure accounts and client, and generate needed keys
 const operatorId = AccountId.fromString(process.env.OPERATOR_ID);
 const operatorKey = PrivateKey.fromString(process.env.OPERATOR_PV_KEY);
 const treasuryId = AccountId.fromString(process.env.TREASURY_ID);
 const treasuryKey = PrivateKey.fromString(process.env.TREASURY_PV_KEY);
+const supplyKey = PrivateKey.generate();
 
 const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
 
-app.post('/create-nft', (req, res) => {
-    const supplyKey = PrivateKey.generate();
-    res.send('create nft')
+router.post('/create-badge', async (req, res) => {
+    // get request body fields
+    const name = req.body.name;
+    const symbol = req.body.symbol;
+    const max = req.body.max
+
+    const tokenId = await createBadge(name, symbol, max);
+
+    //store token id in db
+
+    res.status(200)
+    res.send('created badge')
 })
 
-app.post('/transfer-nft', (req, res) => {
-    res.send('Hello World!')
+router.post('/transfer-badge', async (req, res) => {
+    // get request body fields
+    const CID = req.body.name;
+    const tokenId = TokenId.fromString(req.body.tokenId);
+    const txAccountId = TokenId.fromString(req.body.accountId);
+    const txAccountKey = TokenId.fromString(req.body.accountKey);
+
+    var accountPreBalance = getAccountBalance(txAccountId, tokenId)
+    var treasuryPreBalance = getAccountBalance(treasuryId, tokenId)
+
+    await mintBadge(CID, tokenId);
+    await assignBadge(txAccountId,txAccountKey,tokenId)
+
+    var accountPostBalance = getAccountBalance(txAccountId, tokenId)
+    var treasuryPostBalance = getAccountBalance(treasuryId, tokenId)
+
+    if (accountPostBalance == (accountPreBalance + 1) && treasuryPostBalance == (treasuryPreBalance - 1)){
+        res.status(200)
+        res.send('transferred badge')
+    } else {
+        res.status(500)
+        res.send('ERR: unable to transfer badge')
+    }
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Badger listening at http://localhost:${port}`)
 })
 
-module.exports = router;
-
 // Creating badge based on info supplied by the event organizer
-function createBadge(name,symbol,max) {
+async function createBadge(name,symbol,max) {
     //Creating the NFT
     let badgeCreate = await new TokenCreateTransaction()
         .setTokenName(name)
@@ -64,6 +90,7 @@ function createBadge(name,symbol,max) {
         .setDecimals(0)
         .setInitialSupply(0)
         .setTreasuryAccountId(treasuryId) //maybe get treasury key from organizer?
+		.setSupplyType(TokenSupplyType.Finite)
         .setMaxSupply(max)
         .setSupplyKey(supplyKey) //check what the supply key should be
         .freezeWith(client);
@@ -72,7 +99,7 @@ function createBadge(name,symbol,max) {
     let badgeCreateTxSign = await badgeCreate.sign(treasuryKey);
     let badgeCreateSubmit = await badgeCreateTxSign.execute(client);
 
-     //Get the transaction receipt information
+    //Get the transaction receipt information
     let badgeCreateRx = await badgeCreateSubmit.getReceipt(client);
     let tokenId = badgeCreateRx.tokenId;
     console.log(`- Created NFT with Token ID: ${tokenId} \n`);
@@ -80,7 +107,7 @@ function createBadge(name,symbol,max) {
 }
 
 //Minting badge
-function mintBadge(CID, tokenId) {
+async function mintBadge(CID, tokenId) {
     let mintTx = await new TokenMintTransaction()
         .setTokenId(tokenId)
         .setMetadata([Buffer.from(CID)])
@@ -96,7 +123,7 @@ function mintBadge(CID, tokenId) {
 }
 
 //Assigning badge
-function assignBadge(txAccountId,txAccountKey,tokenId) {
+async function assignBadge(txAccountId,txAccountKey,tokenId) {
     //Associate new account with badge
     let associateTx = await new TokenAssociateTransaction()
 		.setAccountId(txAccountId)
@@ -119,14 +146,9 @@ function assignBadge(txAccountId,txAccountKey,tokenId) {
 }
 
 //Get account balance
-function getAccountBalance(accountId, tokenId) {
+async function getAccountBalance(accountId, tokenId) {
     var balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(client);
-	console.log(`- Treasury balance: ${balanceCheckTx.tokens._map.get(tokenId.toString())} NFTs of ID ${tokenId}`);
+    var balance = balanceCheckTx.tokens._map.get(tokenId.toString())
+	console.log(`- Treasury balance: ${balance} NFTs of ID ${tokenId}`);
+    return balance
 }
-
-async function main() {
-    createBadge("Floofy", "FLF", 50);
-    mintBadge(CID, tokenId);
-}
-
-main();
