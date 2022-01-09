@@ -133,3 +133,12 @@ body {
   background: #FFA69E;
   margin: 10px 0px 0px 0px;
 }
+
+#go-to-link {
+  font-size: 14px;
+  color:#8a8a8a;
+}
+
+#go-to-link:hover {
+  color:#696969;
+}
