@@ -46,7 +46,11 @@ const supplyKey = PrivateKey.generate();
 
 const hederaClient = Client.forTestnet().setOperator(operatorId, operatorKey);
 
-const dbClient = await createDbClient();
+var dbClient;
+
+app.on('listening', async () => {
+    dbClient = await createDbClient();
+});
 
 router.post('/create-user', async (req, res) => {
     // get request body fields
