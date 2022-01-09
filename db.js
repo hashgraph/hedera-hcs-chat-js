@@ -70,23 +70,23 @@ async function getBadge(client, params, callback) {
 async function addUser(client, params, callback) {
 
     const insertStatement = "INSERT INTO users (id, account_id, account_key, username) VALUES ($1, $2, $3, $4);";
-    await client.query(deleteStatement, params, callback);
+    await client.query(insertStatement, params, callback);
   
-    const selectBadgeStatement = "SELECT token_id, token_symbol FROM users;";
-    await client.query(selectBadgeStatement, callback);
+    const selectUserStatement = "SELECT username FROM users;";
+    await client.query(selectUserStatement, callback);
 }
 
 async function deleteUser(client, params, callback) {
   const deleteStatement = "DELETE FROM users WHERE username = $1;";
   await client.query(deleteStatement, params, callback);
 
-  const selectBadgeStatement = "SELECT token_id, token_symbol FROM users;";
-  await client.query(selectBadgeStatement, callback);
+  const selectUserStatement = "SELECT username FROM users;";
+  await client.query(selectUserStatement, callback);
 }
 
 async function getUser(client, params, callback) {
-  const selectBadgeStatement = "SELECT account_id, account_key FROM users WHERE username = $1;";
-  await client.query(selectBadgeStatement, params, callback);
+  const selectUserStatement = "SELECT account_id, account_key FROM users WHERE username = $1;";
+  await client.query(selectUserStatement, params, callback);
 }
 
 // Run the transactions in the connection pool
@@ -128,7 +128,10 @@ async function getUser(client, params, callback) {
         }
     }
   
-    var userVals = [uuidv4(), process.env.TEST_ID, process.env.TEST_KEY, "jane doe"];
+    var userVals = [uuidv4(), process.env.TEST_ID, process.env.TEST_KEY, "janedoe"];
+    // delete entry
+    console.log("deleting entry...");
+    await retryTxn(0, 15, client, deleteUser, ["jane doe"], cb);
 
     // Initialize table in transaction retry wrapper
     console.log("Initializing tables...");
