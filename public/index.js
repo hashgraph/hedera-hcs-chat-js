@@ -26,6 +26,7 @@ $(function() {
 
     // Grab & trim our topic ID
     const topicId = document.getElementById("topic-id");
+    const balance = document.getElementById("balance");
     const idString = topicId.innerHTML.substring(7, topicId.length);
 
     // Append the message to our HTML in pieces
@@ -55,7 +56,9 @@ $(function() {
       $("<li>").text('new connection: ' + connectMessage.operatorAccount + "@" + connectMessage.client).addClass("new-connection"));
     /* update this clients topic id */
     const topicId = document.getElementById("topic-id");
+    const balance = document.getElementById("balance");
     topicId.innerHTML = "Topic: " + connectMessage.topicId;
+    balance.innerHTML = "Balance: " + connectMessage.balance;
   });
 
   // listen for client disconnections from our server
