@@ -14,6 +14,7 @@ const TextDecoder = require("text-encoding").TextDecoder;
 
 /* hedera.js */
 const {
+    AccountBalanceQuery,
     Client,
     TopicId,
     TopicMessageSubmitTransaction,
@@ -32,6 +33,7 @@ let operatorAccount = "";
 const hederaClient = Client.forTestnet();
 let topicId = "";
 let logStatus = "Default";
+let balanceInTinyBar = 0;
 
 /* configure our env based on prompted input */
 async function init() {
@@ -39,6 +41,8 @@ async function init() {
         try {
             logStatus = answers.status;
             configureAccount(answers.account, answers.key);
+            balanceInTinyBar = await getBalanceInTinybar(operatorAccount);
+
             if (answers.existingTopicId != undefined) {
                 configureExistingTopic(answers.existingTopicId);
             } else {
@@ -64,7 +68,8 @@ function runChat() {
         const connectMessage = {
             operatorAccount: operatorAccount,
             client: client.id,
-            topicId: topicId.toString()
+            topicId: topicId.toString(),
+            balance: balanceInTinyBar.toString()
         }
         io.emit(
             "connect message",
@@ -74,7 +79,8 @@ function runChat() {
             const message = {
                 operatorAccount: operatorAccount,
                 client: client.id,
-                message: msg
+                message: msg,
+                balance: balanceInTinyBar.toString()
             }
             sendHCSMessage(JSON.stringify(message));
         });
@@ -182,6 +188,13 @@ function configureAccount(account, key) {
         log("ERROR: configureAccount()", error, logStatus);
         process.exit(1);
     }
+}
+
+async function getBalanceInTinybar(accountId) {
+    const balance = await new AccountBalanceQuery()
+        .setAccountId(accountId)
+        .execute(hederaClient);
+    return balance.hbars.toTinybars();
 }
 
 async function configureNewTopic() {

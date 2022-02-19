@@ -16,6 +16,8 @@ $(function() {
   socket.on("chat message", function(msg) {
 
     const jsonMsg = JSON.parse(msg);
+    console.log(jsonMsg);
+
     // Grab the specifically formatted message string
     const operatorId = jsonMsg.operatorAccount;
     const clientId = jsonMsg.client;
@@ -52,6 +54,9 @@ $(function() {
   socket.on("connect message", function(msg) {
     /* send new connection message */
     const connectMessage = JSON.parse(msg)
+    
+    console.log(connectMessage);
+    
     $("#messages").append(
       $("<li>").text('new connection: ' + connectMessage.operatorAccount + "@" + connectMessage.client).addClass("new-connection"));
     /* update this clients topic id */
