@@ -9,7 +9,7 @@ body {
   font: 13px Helvetica, Arial;
 }
 
-.button {
+.buttonB {
   padding: 15px 25px;
   font-size: 24px;
   text-align: center;
@@ -22,9 +22,9 @@ body {
   box-shadow: 0 9px #999;
 }
 
-.button:hover {background-color: #3e8e41}
+.buttonB:hover {background-color: #3e8e41}
 
-.button:active {
+.buttonB:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
