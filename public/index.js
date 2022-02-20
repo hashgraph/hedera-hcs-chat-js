@@ -3,11 +3,30 @@ $(function() {
   const socket = io();
 
   // handle and submit new chat messages to our server
-  $("form").submit(function(e) {
+  if ($("#m").val() !== "") {
+    $("#form").submit(function(e) {
+      e.preventDefault(); // prevents page reloading
+      const msg = $("#m").val();
+      socket.emit("chat message", msg);
+      $("#m").val("");
+      return false;
+    });
+  }
+
+  // submit transfer request to server
+  $("#transfer-form").submit(function(e) {
     e.preventDefault(); // prevents page reloading
-    const msg = $("#m").val();
-    socket.emit("chat message", $("#m").val());
-    $("#m").val("");
+    const msgAsJson = {
+      sourceId: $("#source-id").val(),
+      destinationId: $("#destination-id").val(),
+      amount: $("#amount").val()
+    }
+    socket.emit("transfer", {
+      sourceId: $("#source-id").val(),
+      destinationId: $("#destination-id").val(),
+      amount: $("#amount").val()
+    });
+    $("#amount").val("");
     return false;
   });
 
@@ -72,5 +91,17 @@ $(function() {
     const disconnectMsg = JSON.parse(msg);
     $("#messages").append(
       $("<li>").text(disconnectMsg.operatorAccount + "@" + disconnectMsg.client + ' has disconnected').addClass("disconnection"));
+  });
+  
+  socket.on("transfer message", function(msg) {
+    /* send new transfer message */
+    console.log("The received message: " + msg);
+    
+    const transferMsg = JSON.parse(msg);
+    $("#messages").append(
+      $("<li>").text(JSON.stringify(transferMsg)));
+      
+    const balance = document.getElementById("balance");
+    balance.innerHTML = "Balance: " + transferMsg.balance;
   });
 });
