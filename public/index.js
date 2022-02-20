@@ -96,12 +96,14 @@ $(function() {
   socket.on("transfer message", function(msg) {
     /* send new transfer message */
     console.log("The received message: " + msg);
-    
+
     const transferMsg = JSON.parse(msg);
+    console.log("transfermsg: " + transferMsg);
+
     $("#messages").append(
       $("<li>").text(JSON.stringify(transferMsg)));
       
     const balance = document.getElementById("balance");
-    balance.innerHTML = "Balance: " + transferMsg.balance;
+    balance.innerHTML = "Balance: " + transferMsg.newBalance;
   });
 });

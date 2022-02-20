@@ -93,11 +93,11 @@ function runChat() {
             }
             io.emit("disconnect message", JSON.stringify(disconnect));
         });
-        client.on("transfer", function (msg) {
+        client.on("transfer", async function (msg) {
             console.log("msg is: " + msg);
             console.log("msg amount is " + msg.amount);
             transferHbar(msg.sourceId, msg.destinationId, parseInt(msg.amount));
-            balanceInTinyBar = getBalanceInTinybar(msg.sourceId);
+            balanceInTinyBar = await getBalanceInTinybar(msg.sourceId);
             io.emit("transfer message", JSON.stringify({ 
             newBalance: balanceInTinyBar.toString()
             }));
