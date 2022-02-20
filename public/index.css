@@ -8,6 +8,12 @@ body {
   font: 13px Helvetica, Arial;
 }
 
+.logo {
+  margin: 3px;
+  height: 7%;
+  width: 7%;
+}
+
 .chat {
   background: grey;
   padding: 0;
@@ -40,11 +46,12 @@ body {
 
 .panel-link {
   text-decoration: none;
-  font-size: 14px;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .main-panel {
-  background: linear-gradient(180deg, #c5c5d4 0%, #b3b3c4 100%);
+  background: linear-gradient(180deg, #9ebee7 0%, #e0bdfc 100%);
   padding: 2%;
   width: 100%;
 }
@@ -227,6 +234,12 @@ form button {
   flex-direction: row;
   justify-content: space-between;
   font-size: 14px;
+}
+
+.productImage {
+  display: flex;
+  flex-direction: row;
+  height: auto;
 }
 
 /* reorganize our chat layout on smaller width screens */

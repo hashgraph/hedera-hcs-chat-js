@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Hello Hedera HCS chat!</title>
-    <link rel="stylesheet" href="/index.css"></link>
+    <link rel="stylesheet" href="/index.css"></link>    
   </head>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -10,27 +10,42 @@
   <body>
     <div class="chat">
       <div class="side-panel">
-        <h1 id="title">Hedera Chat Demo ⚡️</h1>
+        <h1 id="title">H-Mart ⚡️</h1>
         <ul>
-          <li><a class="panel-link" href="index.html"><img />Home</a></li>
-          <li><a class="panel-link" href="chat.html"><img />Chat</a></li>
+          <li><a class="panel-link" href="index.html"><img />Home 🏠</a></li>
+          <li><a class="panel-link" href="chat.html"><img />Chat 💬</a></li>
         </ul>
       </div>
       <div class="main-panel">
         <div class="content">
           <div class="header">
             <div class="chat-details">
-              <h3 id="balance"></h3>
-              <hr>
-              <h3 id="topic-id"></h3>
-              <h4 id="sequence-number"> </h4>
+              <table>
+                <col>
+                <td>
+                  <img src="https://media.discordapp.net/attachments/944466943447019563/944751503787298886/logo_for_hedera.png?width=936&height=702" alt="logo"  class="logo"/>
+                </td>
+                <td>
+                  <h2 id="balance" ></h2>
+                  <h5 id="topic-id"></h5>
+                </td>
+              </table>
             </div>
           </div>
-          <ul id="messages">
-          </ul>
-          <form id="form" action="">
-            <input id="m" autocomplete="off" placeholder="Type a message here"/><button alt="send"> </button>
-          </form>
+          
+          <div>
+            <table>
+              <td>
+                <img src="https://cdn.discordapp.com/emojis/940807223624482826.webp?size=128&quality=lossless" class="productImage">
+              </td>
+              <td>
+                <section>Big paragraph</section>
+              </td>
+            </table>
+            
+          </div>
+
+
         </div>
       </div>
     </div>

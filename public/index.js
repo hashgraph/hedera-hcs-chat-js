@@ -74,3 +74,4 @@ $(function() {
       $("<li>").text(disconnectMsg.operatorAccount + "@" + disconnectMsg.client + ' has disconnected').addClass("disconnection"));
   });
 });
+
