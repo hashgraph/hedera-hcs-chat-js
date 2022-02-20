@@ -30,6 +30,12 @@ body {
   transform: translateY(4px);
 }
 
+.container {
+  text-align: center;
+  padding: 10px 30px;
+  font-weight: bold;
+}
+
 .logo {
   margin: 3px;
   height: 7%;
@@ -264,8 +270,22 @@ form button {
   font-size: 14px;
 }
 
+.polaroid {
+  width: 50%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
+}
+
 .productDetails{
   display: inline-flex;
+}
+
+.unorderedList {
+font-weight: bold;
+font-size: 20px;
+right: 200px;
+
 }
 
 /* reorganize our chat layout on smaller width screens */
