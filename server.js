@@ -16,10 +16,12 @@ const TextDecoder = require("text-encoding").TextDecoder;
 const {
     AccountBalanceQuery,
     Client,
+    Hbar,
     TopicId,
     TopicMessageSubmitTransaction,
     TopicCreateTransaction,
-    TopicMessageQuery
+    TopicMessageQuery,
+    TransferTransaction
 } = require("@hashgraph/sdk");
 
 /* utilities */
@@ -90,6 +92,15 @@ function runChat() {
                 client: client.id
             }
             io.emit("disconnect message", JSON.stringify(disconnect));
+        });
+        client.on("transfer", async function (msg) {
+            console.log("msg is: " + msg);
+            console.log("msg amount is " + msg.amount);
+            transferHbar(msg.sourceId, msg.destinationId, parseInt(msg.amount));
+            balanceInTinyBar = await getBalanceInTinybar(msg.sourceId);
+            io.emit("transfer message", JSON.stringify({ 
+            newBalance: balanceInTinyBar.toString()
+            }));
         });
     });
 }
@@ -194,7 +205,26 @@ async function getBalanceInTinybar(accountId) {
     const balance = await new AccountBalanceQuery()
         .setAccountId(accountId)
         .execute(hederaClient);
+        
+    balanceInTinyBar = balance.hbars.toTinybars();
     return balance.hbars.toTinybars();
+}
+
+async function transferHbar(sourceAccountId, destinationAccountId, amountInTinybars) {
+    //Create the transfer transaction
+    const sendHbar = await new TransferTransaction()
+        .addHbarTransfer(sourceAccountId, Hbar.fromTinybars(amountInTinybars * -1)) //Sending account
+        .addHbarTransfer(destinationAccountId, Hbar.fromTinybars(amountInTinybars)) //Receiving account
+        .execute(hederaClient);
+
+    //Verify the transaction reached consensus
+    const transactionReceipt = await sendHbar.getReceipt(hederaClient);   
+    
+    console.log("The transfer transaction from my account to the new account was: " + transactionReceipt.status.toString());
+    console.log("My new balance is: " + await getBalanceInTinybar(sourceAccountId));
+    console.log("The other account balance is : " + await getBalanceInTinybar(destinationAccountId));
+    
+    return transactionReceipt.status.toString();
 }
 
 async function configureNewTopic() {
