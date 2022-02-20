@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+
 body {
   font: 13px Helvetica, Arial;
 }
@@ -12,6 +13,13 @@ body {
   margin: 3px;
   height: 7%;
   width: 7%;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.one {
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .chat {
@@ -85,8 +93,7 @@ body {
 
 .chat-details {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
 }
 
 form {
@@ -236,10 +243,8 @@ form button {
   font-size: 14px;
 }
 
-.productImage {
-  display: flex;
-  flex-direction: row;
-  height: auto;
+.productDetails{
+  display: inline-flex;
 }
 
 /* reorganize our chat layout on smaller width screens */
@@ -248,6 +253,10 @@ form button {
     background: linear-gradient(180deg, #c5c5d4 0%, #b3b3c4 100%);
     flex-direction: column;
     justify-content: start;
+  }
+
+  .productDetails{
+    display: inline;
   }
 
   .main-panel {
