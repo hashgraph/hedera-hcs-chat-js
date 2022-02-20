@@ -277,6 +277,13 @@ form button {
   margin-bottom: 25px;
 }
 
+.frame {
+  padding-left: 3vw;
+  padding-top: 2vh;
+  padding-right: 2vw;
+  padding-bottom: 2vh;
+}
+
 .productDetails{
   display: inline-flex;
 }
