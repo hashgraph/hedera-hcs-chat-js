@@ -1,10 +1,3 @@
-# Hedera Consensus Service Chat Tutorial
-
-An example web app which demonstrates how you can use decentralized pub-sub messaging on the Hedera Consensus Service.
-
-![UI](images/ui.jpg)
-
-> Estimated set up is ~10 minutes. If it takes you longer or issues arise, please [reach out](https://github.com/hashgraph/hedera-hcs-chat-js/issues)!
 
 ### Built With
 
@@ -12,12 +5,6 @@ An example web app which demonstrates how you can use decentralized pub-sub mess
 - [Hedera Hashgraph's JavaScript SDK](https://github.com/hashgraph/hedera-sdk-js) - The easiest way to use Hedera in JavaScript
 - [Express.js](https://expressjs.com/) - A fast, unopinionated web framework for node.js
 - [Socket.io](https://socket.io/) - A realtime client to server framework for node.js
-
-### Contributors & maintainers
-
-I'd love your help supporting, growing, and improving this application. Seriously!
-
-If you have any ideas please [get in touch](https://twitter.com/cooper_kunz) or file a [pull request](https://github.com/hashgraph/hedera-hcs-chat-js/pulls).
 
 ### Prerequisites
 
@@ -73,12 +60,6 @@ After running your server, it will prompt you to configure your chat, e.g.
 If everything was configured properly, the chat should now open at a random port location.
 
 You can additionally run another instance of the chat application by creating a new terminal, and running the application again. This will find another unused, random port location, and deploy multiple instances to your local machine. With the environment configurability, you can test out multi-client chats.
-
-### Disclaimer
-
-This is just a simple demo application. Please use responsibly.
-
-[Contact me](https://twitter.com/cooper_kunz) if you need anything, or [file an issue](/issues) if you see problems.
 
 ### LICENSE
 
