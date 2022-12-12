@@ -11,7 +11,7 @@
   "dependencies": {
     "@hashgraph/sdk": "^2.0.30",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "inquirer": "^7.0.4",
     "open": "^7.0.0",
     "socket.io": "^2.4.0",
